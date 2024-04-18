@@ -34,58 +34,27 @@ jobs:
           df -h
           ulimit -a
 
-# More info on options: https://github.com/conda-incubator/setup-miniconda
-    - uses: conda-incubator/setup-miniconda@v2
-      with:
-        python-version: ${{ matrix.python-version }}
-        environment-file: devtools/conda-envs/test_env.yaml
+      # More info on options: https://github.com/marketplace/actions/provision-with-micromamba
+      - uses: mamba-org/provision-with-micromamba@main
+        with:
+          environment-file: devtools/conda-envs/test_env.yaml
+          environment-name: test
+          channels: conda-forge,defaults
+          extra-specs: |
+            python=${{ matrix.python-version }}
 
-        channels: conda-forge,defaults
+      - name: Install package
+        # conda setup requires this special shell
+        shell: bash -l {0}
+        run: |
+          python -m pip install . --no-deps
+          micromamba list
 
-        activate-environment: test
-        auto-update-conda: false
-        auto-activate-base: false
-        show-channel-urls: true
-
-    - name: Additional info about the build
-      shell: bash
-      run: |
-        uname -a
-        df -h
-        ulimit -a
-
-
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
-      with:
-        python-version: ${{ matrix.python-version }}
-
-    # - name: Testing Dependencies
-    #   shell: bash
-    #   run: |
-    #     python -m pip install -U pytest pytest-cov codecov
-
-    # - name: Install package
-
-    #   shell: bash
-    #   run: |
-    #     python -m pip install .
-
-    - name: Install package
-
-      # conda setup requires this special shell
-      shell: bash -l {0}
-      run: |
-        python -m pip install . --no-deps
-        conda list
-
-    - name: Run tests
-
-      # conda setup requires this special shell
-      shell: bash -l {0}
-
-      run: |
-        pytest -v --cov=montecarlo --cov-report=xml --color=yes montecarlo/tests/
+      - name: Run tests
+        # conda setup requires this special shell
+        shell: bash -l {0}
+        run: |
+          pytest -v --cov=montecarlo --cov-report=xml --color=yes montecarlo/tests/
 
       - name: CodeCov
         uses: codecov/codecov-action@v1
