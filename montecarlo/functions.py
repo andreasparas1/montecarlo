@@ -51,7 +51,7 @@ class BitString:
 
  
 
-    def set_config(self, s:list[int]):
+    def set_config(self, s):
         self.config = np.array(s)
         
     def set_int_config(self, dec:int):
