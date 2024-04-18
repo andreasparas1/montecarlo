@@ -4,10 +4,11 @@ dependencies:
     # Base depends
   - python
   - pip
+
+    # Package depends
   - numpy
-
-
+  - matplotlib
 
     # Pip-only installs
-  #- pip:
-
+  - pip:
+        - sphinx-rtd-theme
