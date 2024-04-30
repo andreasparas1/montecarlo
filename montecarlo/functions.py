@@ -8,6 +8,9 @@ class BitString:
     Simple class to implement a config of bits
     """
     def __init__(self, N):
+        '''
+        Create new bitstring with N bits
+        '''
         self.N = N
         self.config = np.zeros(N, dtype=int) 
         
@@ -26,6 +29,9 @@ class BitString:
         return self.N
 
     def on(self):
+        '''
+        returns number of on bits
+        '''
         count = 0
         for i in self.config:
             if i == 1:
@@ -34,6 +40,9 @@ class BitString:
 
     
     def off(self):
+        '''
+        returns number of off bits
+        '''
         count = 0
         for i in self.config:
             if i == 0:
@@ -41,9 +50,15 @@ class BitString:
         return count
     
     def flip_site(self,i):
+        '''
+        flips bit at index i
+        '''
         self.config[i] = (self.config[i] - 1) * -1
     
     def int(self):
+        '''
+        int representation of bitstring
+        '''
         ans = 0
         for i in range(len(self.config)):
             ans += (self.config[len(self.config) - i - 1] * (pow(2, i)))
@@ -52,9 +67,15 @@ class BitString:
  
 
     def set_config(self, s):
+        '''
+        sets bitstring to list s
+        '''
         self.config = np.array(s)
         
     def set_int_config(self, dec:int):
+        '''
+        sets bitstring to binary representation of dec
+        '''
         self.config = np.zeros(self.N, dtype=int)
         num = dec
         index = len(self.config) - 1
@@ -126,8 +147,9 @@ class IsingHamiltonian:
         e += np.dot(self.mu, 2 * config.config - 1)
         return e
     def compute_average_values(self, T):
-
-
+        '''
+        Comute expectation value at tempurature T
+        '''
         bs = BitString(self.N)
                 #Boltzman constant
         k =1# 1.38064852 * math.pow(10, -23)
