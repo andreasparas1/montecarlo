@@ -194,7 +194,7 @@ class IsingHamiltonian:
                 print(" %12.8f %s"%(ecurr, bs))
             if ecurr < emin:
                 emin = ecurr
-                xmin = b
+                xmin = bs.config.copy()
 
         return emin, xmin
 
