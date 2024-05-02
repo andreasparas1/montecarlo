@@ -99,6 +99,19 @@ def test_energy():
 
     assert(np.isclose(ham2.energy(my_bs), -6.2))
 
+def test_get_lowest_energy_config():
+    random.seed(2)
+
+    N = 10
+    J = []
+    Jval = -1.0
+    mu = [-.001 for i in range(N)]
+    for i in range(N):
+        J.append([((i+1) % N, Jval), ((i-1) % N, Jval)])
+    ham = montecarlo.IsingHamiltonian(J=J, mu=mu)
+
+    emin, cmin = ham.get_lowest_energy_config(verbose=1)
+
 
     
 if __name__== "__main__":
@@ -109,3 +122,4 @@ if __name__== "__main__":
     test_BS_2()
     test_BS_3()
     test_BS_4()
+    test_get_lowest_energy_config()
