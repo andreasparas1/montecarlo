@@ -8,6 +8,8 @@ Installation
 To install MonteCarlo, you will need an environment with the following packages:
 
 * Python >= 3.7
+* numpy
+* matplotlib
 
 Once you have these packages installed, you can install MonteCarlo in the same environment using
 ::
